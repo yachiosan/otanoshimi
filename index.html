@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>プレゼントキャンペーン</title>
+  <style>
+    body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif;margin:0;background:#0b1020;color:#fff}
+    .wrap{max-width:520px;margin:0 auto;padding:18px}
+    .card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:18px;box-shadow:0 10px 30px rgba(0,0,0,.35)}
+    .title{font-size:20px;font-weight:700;margin:0 0 8px}
+    .sub{opacity:.85;margin:0 0 16px;line-height:1.6}
+    .btn{width:100%;padding:14px 16px;border-radius:14px;border:0;background:#6ee7ff;color:#00121a;font-weight:800;font-size:16px}
+    .btn:active{transform:translateY(1px)}
+    .muted{opacity:.7;font-size:12px;line-height:1.5}
+    .bar{height:10px;background:rgba(255,255,255,.12);border-radius:999px;overflow:hidden;margin:10px 0 18px}
+    .bar > div{height:100%;width:0%;background:linear-gradient(90deg,#6ee7ff,#a78bfa);transition:width .35s}
+    .step{display:flex;justify-content:space-between;font-size:12px;opacity:.85;margin-top:-10px}
+    .roulette{
+      display:flex;align-items:center;justify-content:center;
+      height:120px;border-radius:16px;border:1px dashed rgba(255,255,255,.25);
+      font-size:22px;font-weight:800;letter-spacing:.08em;
+      background:rgba(0,0,0,.25);
+      margin:14px 0;
+    }
+    .pill{display:inline-block;padding:6px 10px;border-radius:999px;background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.14);font-size:12px}
+    a{color:#9ae6ff}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <p class="pill" id="badge">Step 0/3</p>
+      <h1 class="title" id="h">タップして抽選スタート</h1>
+      <p class="sub" id="p">3ステップで結果が出ます。※本ページはキャンペーン用の演出です。</p>
+
+      <div class="bar"><div id="prog"></div></div>
+      <div class="step"><span>開始</span><span>結果</span></div>
+
+      <div class="roulette" id="slot" style="display:none;">---</div>
+
+      <button class="btn" id="btn">スタート</button>
+
+      <p class="muted" style="margin-top:14px">
+        注意：当選は抽選であり、在庫・期間等により終了する場合があります。<br/>
+        <a href="#" onclick="alert('ここに規約ページや会社情報へのリンクを置く');return false;">利用規約</a> /
+        <a href="#" onclick="alert('ここに特商法/運営者情報を置く');return false;">運営者情報</a>
+      </p>
+    </div>
+  </div>
+
+<script>
+  const btn = document.getElementById('btn');
+  const h = document.getElementById('h');
+  const p = document.getElementById('p');
+  const badge = document.getElementById('badge');
+  const prog = document.getElementById('prog');
+  const slot = document.getElementById('slot');
+
+  let step = 0;
+
+  function setStep(s){
+    step = s;
+    badge.textContent = `Step ${step}/3`;
+    prog.style.width = `${(step/3)*100}%`;
+  }
+
+  function sleep(ms){ return new Promise(r=>setTimeout(r,ms)); }
+
+  async function spin(){
+    slot.style.display = 'flex';
+    const items = ["はずれ…","あと少し！","チャンス！","当たり？","もう一回！","ドキドキ…"];
+    const end = Math.floor(Math.random()*items.length);
+    for(let i=0;i<16;i++){
+      slot.textContent = items[(i+end)%items.length];
+      await sleep(80 + i*10);
+    }
+  }
+
+  function showResult(){
+    // 例：当選確率 20%
+    const win = Math.random() < 0.2;
+
+    if(win){
+      h.textContent = "おめでとう！当選しました🎉";
+      const code = "GIFT-" + Math.random().toString(36).slice(2,8).toUpperCase();
+      p.innerHTML = `抽選結果：当選<br>クーポンコード：<b>${code}</b><br><small>※受取には画面の案内に従ってください</small>`;
+      btn.textContent = "受け取る（応募フォームへ）";
+      btn.onclick = () => {
+        // ここを自社フォームURLに差し替え
+        alert("ここで応募/受取フォームへ遷移させる（URL差し替え）");
+      };
+    }else{
+      h.textContent = "今回は残念…";
+      p.textContent = "抽選結果：はずれ（参加ありがとう！）次回も挑戦してね。";
+      btn.textContent = "もう一回（演出）";
+      btn.onclick = () => location.reload();
+    }
+  }
+
+  btn.addEventListener('click', async () => {
+    if(step===0){
+      setStep(1);
+      h.textContent = "Step1：確認";
+      p.textContent = "キャンペーンに参加しますか？";
+      btn.textContent = "進む";
+      return;
+    }
+    if(step===1){
+      setStep(2);
+      h.textContent = "Step2：抽選演出";
+      p.textContent = "ルーレットが止まったら結果へ進みます。";
+      btn.disabled = true;
+      await spin();
+      btn.disabled = false;
+      btn.textContent = "結果を見る";
+      return;
+    }
+    if(step===2){
+      setStep(3);
+      h.textContent = "Step3：結果";
+      p.textContent = "";
+      btn.style.display = "none";
+      await sleep(200);
+      showResult();
+      btn.style.display = "block";
+      return;
+    }
+  });
+
+  setStep(0);
+</script>
+</body>
+</html>
