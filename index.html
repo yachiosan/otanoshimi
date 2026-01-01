@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>プレゼントキャンペーン</title>
+  <title>お誕生日プレゼントキャンペーン！！</title>
   <style>
     body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif;margin:0;background:#0b1020;color:#fff}
     .wrap{max-width:520px;margin:0 auto;padding:18px}
@@ -32,7 +32,7 @@
     <div class="card">
       <p class="pill" id="badge">Step 0/3</p>
       <h1 class="title" id="h">タップして抽選スタート</h1>
-      <p class="sub" id="p">3ステップで結果が出ます。※本ページはキャンペーン用の演出です。</p>
+      <p class="sub" id="p">たったの3ステップ！</p>
 
       <div class="bar"><div id="prog"></div></div>
       <div class="step"><span>開始</span><span>結果</span></div>
@@ -43,8 +43,8 @@
 
       <p class="muted" style="margin-top:14px">
         注意：当選は抽選であり、在庫・期間等により終了する場合があります。<br/>
-        <a href="#" onclick="alert('ここに規約ページや会社情報へのリンクを置く');return false;">利用規約</a> /
-        <a href="#" onclick="alert('ここに特商法/運営者情報を置く');return false;">運営者情報</a>
+        <a href="#" onclick="alert('特に規約はありませんwww');return false;">利用規約</a> /
+        <a href="#" onclick="alert('yachiosanプレゼント運営委員会');return false;">運営者情報</a>
       </p>
     </div>
   </div>
@@ -79,7 +79,7 @@
 
   function showResult(){
     // 例：当選確率 20%
-    const win = Math.random() < 0.2;
+    const win = Math.random() < 1.0;
 
     if(win){
       h.textContent = "おめでとう！当選しました🎉";
@@ -88,7 +88,7 @@
       btn.textContent = "受け取る（応募フォームへ）";
       btn.onclick = () => {
         // ここを自社フォームURLに差し替え
-        alert("ここで応募/受取フォームへ遷移させる（URL差し替え）");
+        alert("ここで応募/受取フォームへ遷移させる（https://line.me/ti/p/sLG4eocmuF）");
       };
     }else{
       h.textContent = "今回は残念…";
