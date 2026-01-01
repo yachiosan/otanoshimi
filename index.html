@@ -1,137 +1,176 @@
 <!doctype html>
 <html lang="ja">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>お誕生日プレゼントキャンペーン！！</title>
-  <style>
-    body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif;margin:0;background:#0b1020;color:#fff}
-    .wrap{max-width:520px;margin:0 auto;padding:18px}
-    .card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:18px;box-shadow:0 10px 30px rgba(0,0,0,.35)}
-    .title{font-size:20px;font-weight:700;margin:0 0 8px}
-    .sub{opacity:.85;margin:0 0 16px;line-height:1.6}
-    .btn{width:100%;padding:14px 16px;border-radius:14px;border:0;background:#6ee7ff;color:#00121a;font-weight:800;font-size:16px}
-    .btn:active{transform:translateY(1px)}
-    .muted{opacity:.7;font-size:12px;line-height:1.5}
-    .bar{height:10px;background:rgba(255,255,255,.12);border-radius:999px;overflow:hidden;margin:10px 0 18px}
-    .bar > div{height:100%;width:0%;background:linear-gradient(90deg,#6ee7ff,#a78bfa);transition:width .35s}
-    .step{display:flex;justify-content:space-between;font-size:12px;opacity:.85;margin-top:-10px}
-    .roulette{
-      display:flex;align-items:center;justify-content:center;
-      height:120px;border-radius:16px;border:1px dashed rgba(255,255,255,.25);
-      font-size:22px;font-weight:800;letter-spacing:.08em;
-      background:rgba(0,0,0,.25);
-      margin:14px 0;
-    }
-    .pill{display:inline-block;padding:6px 10px;border-radius:999px;background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.14);font-size:12px}
-    a{color:#9ae6ff}
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>プレゼントキャンペーン</title>
+
+<style>
+body{
+  margin:0;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans JP",sans-serif;
+  background:#0b1020;
+  color:#fff;
+}
+.wrap{
+  max-width:520px;
+  margin:0 auto;
+  padding:18px;
+}
+.card{
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:18px;
+  padding:20px;
+  box-shadow:0 12px 30px rgba(0,0,0,.35);
+}
+h1{
+  font-size:22px;
+  margin:0 0 10px;
+}
+p{
+  opacity:.9;
+  line-height:1.7;
+}
+button{
+  width:100%;
+  padding:14px;
+  border-radius:14px;
+  border:none;
+  font-size:16px;
+  font-weight:700;
+  background:linear-gradient(90deg,#6ee7ff,#a78bfa);
+  color:#00121a;
+}
+button:active{transform:translateY(1px)}
+.bar{
+  height:10px;
+  background:rgba(255,255,255,.15);
+  border-radius:999px;
+  overflow:hidden;
+  margin:14px 0;
+}
+.bar > div{
+  height:100%;
+  width:0%;
+  background:linear-gradient(90deg,#6ee7ff,#a78bfa);
+  transition:width .4s;
+}
+.slot{
+  display:none;
+  height:120px;
+  border-radius:16px;
+  border:1px dashed rgba(255,255,255,.3);
+  margin:14px 0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:22px;
+  font-weight:800;
+  background:rgba(0,0,0,.25);
+}
+img{
+  width:100%;
+  border-radius:16px;
+  border:1px solid rgba(255,255,255,.15);
+}
+.muted{
+  opacity:.7;
+  font-size:12px;
+  margin-top:12px;
+  line-height:1.6;
+}
+</style>
 </head>
+
 <body>
-  <div class="wrap">
-    <div class="card">
-      <p class="pill" id="badge">Step 0/3</p>
-      <h1 class="title" id="h">タップして抽選スタート</h1>
-      <p class="sub" id="p">たったの3ステップ！</p>
+<div class="wrap">
+  <div class="card">
 
-      <div class="bar"><div id="prog"></div></div>
-      <div class="step"><span>開始</span><span>結果</span></div>
+    <h1 id="title">タップしてスタート</h1>
+    <p id="text">3ステップでプレゼントが受け取れます。</p>
 
-      <div class="roulette" id="slot" style="display:none;">---</div>
+    <div class="bar"><div id="prog"></div></div>
 
-      <button class="btn" id="btn">スタート</button>
+    <div class="slot" id="slot">---</div>
 
-      <p class="muted" style="margin-top:14px">
-        注意：当選は抽選であり、在庫・期間等により終了する場合があります。<br/>
-        <a href="#" onclick="alert('特に規約はありませんwww');return false;">利用規約</a> /
-        <a href="#" onclick="alert('yachiosanプレゼント運営委員会');return false;">運営者情報</a>
-      </p>
+    <button id="btn">スタート</button>
+
+    <div class="muted">
+      ※本ページはキャンペーン用の演出です。<br>
+      参加特典としてプレゼントが受け取れます。
     </div>
+
   </div>
+</div>
 
 <script>
-  const btn = document.getElementById('btn');
-  const h = document.getElementById('h');
-  const p = document.getElementById('p');
-  const badge = document.getElementById('badge');
-  const prog = document.getElementById('prog');
-  const slot = document.getElementById('slot');
+const btn   = document.getElementById("btn");
+const title = document.getElementById("title");
+const text  = document.getElementById("text");
+const prog  = document.getElementById("prog");
+const slot  = document.getElementById("slot");
 
-  let step = 0;
+let step = 0;
 
-  function setStep(s){
-    step = s;
-    badge.textContent = `Step ${step}/3`;
-    prog.style.width = `${(step/3)*100}%`;
+function setProgress(n){
+  prog.style.width = (n/3*100) + "%";
+}
+
+function sleep(ms){ return new Promise(r=>setTimeout(r,ms)); }
+
+async function roulette(){
+  slot.style.display = "flex";
+  const words = ["チャンス…","確認中…","抽選中…","ドキドキ…","結果は…"];
+  for(let i=0;i<18;i++){
+    slot.textContent = words[i % words.length];
+    await sleep(80 + i*10);
+  }
+}
+
+btn.onclick = async () => {
+
+  // STEP 1
+  if(step === 0){
+    step = 1;
+    setProgress(1);
+    title.textContent = "STEP1：参加確認";
+    text.textContent  = "キャンペーンに参加しますか？";
+    btn.textContent   = "進む";
+    return;
   }
 
-  function sleep(ms){ return new Promise(r=>setTimeout(r,ms)); }
-
-  async function spin(){
-    slot.style.display = 'flex';
-    const items = ["はずれ…","あと少し！","チャンス！","当たり？","もう一回！","ドキドキ…"];
-    const end = Math.floor(Math.random()*items.length);
-    for(let i=0;i<16;i++){
-      slot.textContent = items[(i+end)%items.length];
-      await sleep(80 + i*10);
-    }
+  // STEP 2
+  if(step === 1){
+    step = 2;
+    setProgress(2);
+    title.textContent = "STEP2：演出";
+    text.textContent  = "結果を確認しています…";
+    btn.disabled = true;
+    await roulette();
+    btn.disabled = false;
+    btn.textContent = "結果を見る";
+    return;
   }
 
-  function showResult(){
-    // 例：当選確率 100%
-    const win = true;
+  // STEP 3（100%当たり）
+  if(step === 2){
+    step = 3;
+    setProgress(3);
+    title.textContent = "🎉 おめでとうございます！";
+    text.textContent  = "参加特典のプレゼントを受け取ってください。";
+    btn.remove();
 
-　if(win){
-  h.textContent = "おめでとう！当選しました🎉";
-  p.innerHTML = "下の画像をタップしてLINEを追加してください";
-
-  btn.outerHTML = `
-    <a href="https://line.me/ti/p/sLG4eocmuF" target="_blank">
-      <img src="White, Grey and Blue Browser Nerdy Birthday Card.png"
-           alt="LINEで受け取る"
-           style="width:100%;border-radius:16px;">
-    </a>
-　}
-
-    }else{
-      h.textContent = "今回は残念…";
-      p.textContent = "抽選結果：はずれ（参加ありがとう！）次回も挑戦してね。";
-      btn.textContent = "もう一回（演出）";
-      btn.onclick = () => location.reload();
-    }
+    // 画像タップでLINEへ
+    slot.outerHTML = `
+      <a href="https://line.me/ti/p/sLG4eocmuF" target="_blank" rel="noopener">
+        <img src="White,%20Grey%20and%20Blue%20Browser%20Nerdy%20Birthday%20Card.png"
+             alt="LINEで受け取る">
+      </a>
+    `;
   }
-
-  btn.addEventListener('click', async () => {
-    if(step===0){
-      setStep(1);
-      h.textContent = "Step1：確認";
-      p.textContent = "キャンペーンに参加しますか？";
-      btn.textContent = "進む";
-      return;
-    }
-    if(step===1){
-      setStep(2);
-      h.textContent = "Step2：抽選演出";
-      p.textContent = "ルーレットが止まったら結果へ進みます。";
-      btn.disabled = true;
-      await spin();
-      btn.disabled = false;
-      btn.textContent = "結果を見る";
-      return;
-    }
-    if(step===2){
-      setStep(3);
-      h.textContent = "Step3：結果";
-      p.textContent = "";
-      btn.style.display = "none";
-      await sleep(200);
-      showResult();
-      btn.style.display = "block";
-      return;
-    }
-  });
-
-  setStep(0);
+};
 </script>
+
 </body>
 </html>
