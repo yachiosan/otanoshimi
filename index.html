@@ -144,7 +144,7 @@ btn.onclick = async () => {
   if(step === 1){
     step = 2;
     setProgress(2);
-    title.textContent = "STEP2：演出";
+    title.textContent = "STEP2：さぁ、当たるかな！？！？";
     text.textContent  = "結果を確認しています…";
     btn.disabled = true;
     await roulette();
@@ -164,7 +164,7 @@ btn.onclick = async () => {
     // 画像タップでLINEへ
     slot.outerHTML = `
       <a href="https://line.me/ti/p/sLG4eocmuF" target="_blank" rel="noopener">
-        <img src="White,%20Grey%20and%20Blue%20Browser%20Nerdy%20Birthday%20Card.png"
+        <img src="line.PNG"
              alt="LINEで受け取る">
       </a>
     `;
