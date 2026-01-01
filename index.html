@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>プレゼントキャンペーン</title>
+<title>誕生日プレゼントキャンペーン</title>
 <style>
   body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans JP",sans-serif;background:#0b1020;color:#fff}
   .wrap{max-width:520px;margin:0 auto;padding:18px}
@@ -30,7 +30,7 @@
 
     <button id="btn">スタート</button>
 
-    <div class="muted">※プレゼントが受け取れます。</div>
+    <div class="muted">※抽選でプレゼントが受け取れます。</div>
   </div>
 </div>
 
@@ -77,8 +77,8 @@
     }
     if(step === 2){
       step = 3; setProgress(3);
-      title.textContent="🎉 おめでとうございます！";
-      text.textContent="プレゼントを受け取ってください。";
+      title.textContent="🎉 誕生日おめでとうございます！";
+      text.textContent="画像をよく読み、タップしてプレゼントを受け取ってください。";
       btn.remove();
       slot.outerHTML = `
         <a href="${LINE_URL}" target="_blank" rel="noopener">
