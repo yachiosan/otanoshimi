@@ -3,173 +3,90 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>誕生日プレゼントキャンペーン</title>
+<title>プレゼントキャンペーン</title>
 <style>
-body{
-  margin:0;
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans JP",sans-serif;
-  background:#0b1020;
-  color:#fff;
-}
-.wrap{
-  max-width:520px;
-  margin:0 auto;
-  padding:18px;
-}
-.card{
-  background:rgba(255,255,255,.06);
-  border:1px solid rgba(255,255,255,.12);
-  border-radius:18px;
-  padding:20px;
-  box-shadow:0 12px 30px rgba(0,0,0,.35);
-}
-h1{
-  font-size:22px;
-  margin:0 0 10px;
-}
-p{
-  opacity:.9;
-  line-height:1.7;
-}
-button{
-  width:100%;
-  padding:14px;
-  border-radius:14px;
-  border:none;
-  font-size:16px;
-  font-weight:700;
-  background:linear-gradient(90deg,#6ee7ff,#a78bfa);
-  color:#00121a;
-}
-button:active{transform:translateY(1px)}
-.bar{
-  height:10px;
-  background:rgba(255,255,255,.15);
-  border-radius:999px;
-  overflow:hidden;
-  margin:14px 0;
-}
-.bar > div{
-  height:100%;
-  width:0%;
-  background:linear-gradient(90deg,#6ee7ff,#a78bfa);
-  transition:width .4s;
-}
-.slot{
-  display:none;
-  height:120px;
-  border-radius:16px;
-  border:1px dashed rgba(255,255,255,.3);
-  margin:14px 0;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:22px;
-  font-weight:800;
-  background:rgba(0,0,0,.25);
-}
-img{
-  width:100%;
-  border-radius:16px;
-  border:1px solid rgba(255,255,255,.15);
-}
-.muted{
-  opacity:.7;
-  font-size:12px;
-  margin-top:12px;
-  line-height:1.6;
-}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans JP",sans-serif;background:#0b1020;color:#fff}
+  .wrap{max-width:520px;margin:0 auto;padding:18px}
+  .card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:18px;padding:20px;box-shadow:0 12px 30px rgba(0,0,0,.35)}
+  h1{font-size:22px;margin:0 0 10px}
+  p{opacity:.9;line-height:1.7;margin:0 0 12px}
+  button{width:100%;padding:14px;border-radius:14px;border:none;font-size:16px;font-weight:800;background:linear-gradient(90deg,#6ee7ff,#a78bfa);color:#00121a}
+  button:active{transform:translateY(1px)}
+  .bar{height:10px;background:rgba(255,255,255,.15);border-radius:999px;overflow:hidden;margin:14px 0}
+  .bar>div{height:100%;width:0%;background:linear-gradient(90deg,#6ee7ff,#a78bfa);transition:width .4s}
+  #slot{height:120px;border-radius:16px;border:1px dashed rgba(255,255,255,.3);margin:14px 0;display:none;align-items:center;justify-content:center;font-size:22px;font-weight:900;background:rgba(0,0,0,.25)}
+  img{width:100%;border-radius:16px;border:1px solid rgba(255,255,255,.15)}
+  .muted{opacity:.7;font-size:12px;margin-top:12px;line-height:1.6}
 </style>
 </head>
-
 <body>
 <div class="wrap">
   <div class="card">
-
     <h1 id="title">タップしてスタート</h1>
     <p id="text">3ステップでプレゼントが受け取れます。</p>
 
     <div class="bar"><div id="prog"></div></div>
-
-    <div class="slot" id="slot">---</div>
+    <div id="slot">---</div>
 
     <button id="btn">スタート</button>
 
-    <div class="muted">
-      ※本ページは誕生日用の演出です。<br>
-      参加特典としてプレゼントが受け取れます。
-    </div>
-
+    <div class="muted">※本ページはキャンペーン用の演出です。参加特典としてプレゼントが受け取れます。</div>
   </div>
 </div>
 
 <script>
-const btn   = document.getElementById("btn");
-const title = document.getElementById("title");
-const text  = document.getElementById("text");
-const prog  = document.getElementById("prog");
-const slot  = document.getElementById("slot");
+  const btn   = document.getElementById("btn");
+  const title = document.getElementById("title");
+  const text  = document.getElementById("text");
+  const prog  = document.getElementById("prog");
+  const slot  = document.getElementById("slot");
+  let step = 0;
 
-let step = 0;
+  const LINE_URL = "https://line.me/ti/p/sLG4eocmuF";
+  const IMAGE    = "line.png"; // ← 画像をこの名前にしてね
 
-function setProgress(n){
-  prog.style.width = (n/3*100) + "%";
-}
+  function setProgress(n){ prog.style.width = (n/3*100) + "%"; }
+  function sleep(ms){ return new Promise(r=>setTimeout(r,ms)); }
 
-function sleep(ms){ return new Promise(r=>setTimeout(r,ms)); }
-
-async function roulette(){
-  slot.style.display = "flex";
-  const words = ["チャンス…","確認中…","抽選中…","ドキドキ…","結果は…"];
-  for(let i=0;i<18;i++){
-    slot.textContent = words[i % words.length];
-    await sleep(80 + i*10);
-  }
-}
-
-btn.onclick = async () => {
-
-  // STEP 1
-  if(step === 0){
-    step = 1;
-    setProgress(1);
-    title.textContent = "STEP1：参加確認";
-    text.textContent  = "キャンペーンに参加しますか？";
-    btn.textContent   = "進む";
-    return;
+  async function roulette(){
+    slot.style.display = "flex";
+    const words = ["チャンス…","確認中…","ドキドキ…","もうすぐ…","結果は…"];
+    for(let i=0;i<18;i++){
+      slot.textContent = words[i % words.length];
+      await sleep(80 + i*10);
+    }
   }
 
-  // STEP 2
-  if(step === 1){
-    step = 2;
-    setProgress(2);
-    title.textContent = "STEP2：さぁ、当たるかな！？！？";
-    text.textContent  = "結果を確認しています…";
-    btn.disabled = true;
-    await roulette();
-    btn.disabled = false;
-    btn.textContent = "結果を見る";
-    return;
-  }
-
-  // STEP 3（100%当たり）
-  if(step === 2){
-    step = 3;
-    setProgress(3);
-    title.textContent = "🎉 おめでとうございます！";
-    text.textContent  = "画像をタップして欲しいものをリクエストください。";
-    btn.remove();
-
-    // 画像タップでLINEへ
-    slot.outerHTML = `
-      <a href="https://line.me/ti/p/sLG4eocmuF" target="_blank" rel="noopener">
-        <img src="line.PNG"
-             alt="LINEで受け取る">
-      </a>
-    `;
-  }
-};
+  btn.addEventListener("click", async () => {
+    if(step === 0){
+      step = 1; setProgress(1);
+      title.textContent="STEP1：参加確認";
+      text.textContent="キャンペーンに参加しますか？";
+      btn.textContent="進む";
+      return;
+    }
+    if(step === 1){
+      step = 2; setProgress(2);
+      title.textContent="STEP2：演出";
+      text.textContent="結果を確認しています…";
+      btn.disabled = true;
+      await roulette();
+      btn.disabled = false;
+      btn.textContent="結果を見る";
+      return;
+    }
+    if(step === 2){
+      step = 3; setProgress(3);
+      title.textContent="🎉 おめでとうございます！";
+      text.textContent="参加特典のプレゼントを受け取ってください。";
+      btn.remove();
+      slot.outerHTML = `
+        <a href="${LINE_URL}" target="_blank" rel="noopener">
+          <img src="${IMAGE}" alt="LINEで受け取る">
+        </a>
+      `;
+    }
+  });
 </script>
-
 </body>
 </html>
