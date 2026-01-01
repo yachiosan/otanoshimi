@@ -78,21 +78,22 @@
   }
 
   function showResult(){
-    // 例：当選確率 20%
-    const win = Math.random() < 1.0;
+    // 例：当選確率 100%
+    const win = true;
 
-    if(win){
-      h.textContent = "おめでとう！当選しました🎉";
-      const code = "GIFT-" + Math.random().toString(36).slice(2,8).toUpperCase();
-      p.innerHTML = `抽選結果：当選<br>クーポンコード：<b>${code}</b><br><small>※受取には画面の案内に従ってください</small>`;
-      btn.outerHTML = `
-<a href="https://line.me/ti/p/sLG4eocmuF" target="_blank">
-  <img src="White, Grey and Blue Browser Nerdy Birthday Card.png" 
-       alt="応募フォームへ" 
-       style="width:100%;border-radius:16px;">
-</a>
-`;
-      };
+if(win){
+  h.textContent = "おめでとう！当選しました🎉";
+  p.innerHTML = "下の画像をタップしてLINEを追加してください";
+
+  btn.outerHTML = `
+    <a href="https://line.me/ti/p/sLG4eocmuF" target="_blank">
+      <img src="White, Grey and Blue Browser Nerdy Birthday Card.png"
+           alt="LINEで受け取る"
+           style="width:100%;border-radius:16px;">
+    </a>
+  `;
+}
+
     }else{
       h.textContent = "今回は残念…";
       p.textContent = "抽選結果：はずれ（参加ありがとう！）次回も挑戦してね。";
