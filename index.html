@@ -85,10 +85,13 @@
       h.textContent = "おめでとう！当選しました🎉";
       const code = "GIFT-" + Math.random().toString(36).slice(2,8).toUpperCase();
       p.innerHTML = `抽選結果：当選<br>クーポンコード：<b>${code}</b><br><small>※受取には画面の案内に従ってください</small>`;
-      btn.textContent = "受け取る（応募フォームへ）";
-      btn.onclick = () => {
-        // ここを自社フォームURLに差し替え
-        alert("ここで応募/受取フォームへ遷移させる（https://line.me/ti/p/sLG4eocmuF）");
+      btn.outerHTML = `
+<a href="https://line.me/ti/p/sLG4eocmuF" target="_blank">
+  <img src="White, Grey and Blue Browser Nerdy Birthday Card.png" 
+       alt="応募フォームへ" 
+       style="width:100%;border-radius:16px;">
+</a>
+`;
       };
     }else{
       h.textContent = "今回は残念…";
